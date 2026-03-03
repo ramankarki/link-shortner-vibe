@@ -5,6 +5,8 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { CreateLinkModal } from './create-link-modal';
+import { EditLinkModal } from './edit-link-modal';
+import { DeleteLinkDialog } from './delete-link-dialog';
 
 interface Link {
   id: string;
@@ -24,11 +26,24 @@ export function DashboardContent({
   userLinks: initialLinks,
   onLinksChange,
 }: DashboardContentProps) {
-  const [open, setOpen] = useState(false);
+  const [createOpen, setCreateOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [selectedLink, setSelectedLink] = useState<Link | null>(null);
 
   const handleSuccess = () => {
     // Trigger a refresh of the links
     onLinksChange?.();
+  };
+
+  const handleEdit = (link: Link) => {
+    setSelectedLink(link);
+    setEditOpen(true);
+  };
+
+  const handleDelete = (link: Link) => {
+    setSelectedLink(link);
+    setDeleteOpen(true);
   };
 
   return (
@@ -38,7 +53,7 @@ export function DashboardContent({
           <h1 className="text-3xl font-bold mb-2">Your Links</h1>
           <p className="text-gray-600">Manage and track your shortened URLs</p>
         </div>
-        <Button onClick={() => setOpen(true)} size="lg">
+        <Button onClick={() => setCreateOpen(true)} size="lg">
           Create Link
         </Button>
       </div>
@@ -48,7 +63,9 @@ export function DashboardContent({
           <p className="text-gray-500 mb-4">
             No links yet. Create your first shortened URL!
           </p>
-          <Button onClick={() => setOpen(true)}>Create Your First Link</Button>
+          <Button onClick={() => setCreateOpen(true)}>
+            Create Your First Link
+          </Button>
         </Card>
       ) : (
         <div className="grid gap-4">
@@ -68,6 +85,22 @@ export function DashboardContent({
                     {link.originalUrl}
                   </p>
                 </div>
+                <div className="flex gap-2 shrink-0">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleEdit(link)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => handleDelete(link)}
+                  >
+                    Delete
+                  </Button>
+                </div>
               </div>
             </Card>
           ))}
@@ -75,8 +108,23 @@ export function DashboardContent({
       )}
 
       <CreateLinkModal
-        open={open}
-        onOpenChange={setOpen}
+        open={createOpen}
+        onOpenChange={setCreateOpen}
+        onSuccess={handleSuccess}
+      />
+
+      <EditLinkModal
+        open={editOpen}
+        onOpenChange={setEditOpen}
+        link={selectedLink}
+        onSuccess={handleSuccess}
+      />
+
+      <DeleteLinkDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        linkId={selectedLink?.id || null}
+        shortCode={selectedLink?.shortCode || null}
         onSuccess={handleSuccess}
       />
     </main>

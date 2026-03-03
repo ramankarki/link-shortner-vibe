@@ -37,11 +37,6 @@ export default function Home() {
         'Share shortened links across social media and messaging apps',
     },
     {
-      icon: BarChart3,
-      title: 'Analytics',
-      description: 'Track clicks and monitor the performance of your links',
-    },
-    {
       icon: Settings,
       title: 'Customization',
       description: 'Create custom short codes to personalize your links',
