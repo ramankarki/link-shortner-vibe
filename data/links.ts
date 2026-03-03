@@ -46,3 +46,9 @@ export async function deleteLinkInDb(linkId: string, userId: string) {
     .delete(links)
     .where(and(eq(links.id, linkId), eq(links.userId, userId)));
 }
+
+export async function getLinkByShortCode(shortCode: string) {
+  return db.query.links.findFirst({
+    where: eq(links.shortCode, shortCode),
+  });
+}
