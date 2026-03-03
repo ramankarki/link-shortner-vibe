@@ -6,25 +6,6 @@
 
 **Core Domain**: URL shortening service with user authentication and management.
 
-## 🚨 CRITICAL: Always Read Documentation First
-
-**BEFORE generating ANY code, you MUST read the relevant instruction files in the `/docs` directory.**
-
-The `/docs` directory contains detailed guidelines and standards that are **MANDATORY** for this project:
-
-- **[docs/AUTHENTICATION.md](docs/AUTHENTICATION.md)**: Authentication patterns, Clerk integration, protected routes, and auth standards
-- **[docs/UI_COMPONENTS.md](docs/UI_COMPONENTS.md)**: UI component guidelines, Shadcn/UI patterns, styling conventions, and component structure
-
-**Failure to read these files before coding will result in non-compliant code that does not follow project standards.**
-
-### When to Read Documentation
-
-- **Authentication work**: Read [AUTHENTICATION.md](docs/AUTHENTICATION.md) before implementing any auth-related features, protected routes, or user management
-- **UI/Component work**: Read [UI_COMPONENTS.md](docs/UI_COMPONENTS.md) before creating or modifying any React components, forms, or UI elements
-- **Any new feature**: Read ALL relevant docs to ensure compliance with project standards
-
-These files contain critical patterns, conventions, and requirements that cannot be ignored. Always verify your implementation against these standards.
-
 ## Tech Stack
 
 - **Framework**: Next.js 16.1.6 (App Router)
@@ -35,13 +16,6 @@ These files contain critical patterns, conventions, and requirements that cannot
 - **Build**: TSX for scripting, ESLint for linting, PostCSS for CSS processing
 
 ## Architecture
-
-### Core Layers
-
-1. **Auth Layer** ([docs/AUTHENTICATION.md](docs/AUTHENTICATION.md)): Clerk provider wraps the app; header displays `SignInButton`, `SignUpButton`, and authenticated `UserButton`. See [AUTHENTICATION.md](docs/AUTHENTICATION.md) for auth standards and protected routes.
-2. **Database Layer** ([db/index.ts](db/index.ts)): Drizzle ORM instance initialized with `DATABASE_URL`
-3. **UI Layer** ([docs/UI_COMPONENTS.md](docs/UI_COMPONENTS.md)): Next.js Server Components default; Client Components only when needed (form interaction, state). All UI elements use Shadcn/UI components exclusively. See [UI_COMPONENTS.md](docs/UI_COMPONENTS.md) for component guidelines and patterns.
-4. **Styling**: Global CSS in [app/globals.css](app/globals.css), Tailwind + utility function `cn()` for className merging
 
 ### Data Flow
 
@@ -122,22 +96,6 @@ lib/
 .github/
   copilot-instructions.md  # This file
 ```
-
-## Common Tasks for AI Agents
-
-**⚠️ ALWAYS read relevant `/docs` files BEFORE starting any task below.**
-
-1. **Adding a feature**:
-   - **FIRST**: Read [AUTHENTICATION.md](docs/AUTHENTICATION.md) if feature involves auth
-   - Then: Create API route in `app/api/...`, authenticate with Clerk, query DB via Drizzle
-2. **Creating UI**:
-   - **FIRST**: Read [UI_COMPONENTS.md](docs/UI_COMPONENTS.md) for component standards
-   - Then: Import Shadcn/UI components, use `cn()` for styling, mark interactive elements with `'use client'`
-3. **Database work**:
-   - Add schema to `db/schema.ts`, run `drizzle-kit push`, use Drizzle queries (type-safe)
-4. **Debugging**:
-   - Check `app/layout.tsx` for auth setup; verify `DATABASE_URL` and Clerk env vars; ESLint output for type issues
-   - Review relevant `/docs` files to ensure code follows project standards
 
 ## Notes for Agents
 
